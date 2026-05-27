@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title> VXZ UNBAN V9 | FULL UNBAN + STEGHIDE + EXIF </title>
-  <link rel="icon" href="https://files.catbox.moe/eofpqx.jpg">
+  <title> VXZ UNBAN V10 | FULL UNBAN + STEGHIDE + EXIF </title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23F4320B'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-weight='bold'%3EV%3C/text%3E%3C/svg%3E">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0a0c12">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="VXZ UNBAN">
-  <link rel="apple-touch-icon" href="https://files.catbox.moe/eofpqx.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
@@ -23,7 +22,7 @@
     .hero { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding: 8px 4px; }
     .logo-badge { display: flex; align-items: center; gap: 12px; }
     .icon-glow { width: 48px; height: 48px; background: linear-gradient(145deg, #1f1c2c, #11141f); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px rgba(244, 50, 11, 0.2); }
-    .icon-glow img { width: 32px; height: 32px; border-radius: 18px; object-fit: cover; }
+    .icon-glow i { font-size: 28px; color: #F4320B; }
     .title-glow { font-weight: 800; font-size: 1.7rem; background: linear-gradient(135deg, #FF512F, #F09819); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .sub { font-size: 0.75rem; color: #9aa4bf; margin-top: 2px; }
     
@@ -51,13 +50,13 @@
     .delUserBtn { background: linear-gradient(135deg, #ff4d4d, #cc0000); border: none; border-radius: 30px; padding: 6px 16px; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
     .delUserBtn:hover { transform: scale(1.05); box-shadow: 0 0 10px rgba(255,0,0,0.5); }
     
-    /* ROBOT CARD */
+    /* ROBOT CARD dengan icon internal */
     .robot-card { text-align: center; padding: 28px 20px; margin-bottom: 28px; transition: all 0.3s; }
     .robot-card:hover { transform: translateY(-5px); box-shadow: 0 25px 45px rgba(0,0,0,0.5); }
-    .avatar-frame { width: 110px; height: 110px; margin: 0 auto 14px; background: linear-gradient(135deg, #F4320B, #FF00F7); border-radius: 50%; padding: 4px; animation: rotateGlow 3s linear infinite; }
+    .avatar-frame { width: 110px; height: 110px; margin: 0 auto 14px; background: linear-gradient(135deg, #F4320B, #FF00F7); border-radius: 50%; padding: 4px; animation: rotateGlow 3s linear infinite; display: flex; align-items: center; justify-content: center; }
     @keyframes rotateGlow { 0% { box-shadow: 0 0 0 0 rgba(244,50,11,0.4); } 50% { box-shadow: 0 0 20px 5px rgba(244,50,11,0.6); } 100% { box-shadow: 0 0 0 0 rgba(244,50,11,0.4); } }
     .avatar-inner { width: 100%; height: 100%; background: #0a0e17; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-inner i { font-size: 60px; color: #F4320B; }
     .robot-name { font-weight: 800; font-size: 1.6rem; background: linear-gradient(120deg, #fff, #ffb347, #F4320B); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .badge-status { font-size: 0.75rem; background: rgba(0, 255, 170, 0.15); display: inline-block; padding: 5px 14px; border-radius: 30px; margin-top: 10px; color: #2effb6; border: 1px solid rgba(46,255,182,0.3); }
     
@@ -92,54 +91,14 @@
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .tool-panel h4 { margin-bottom: 18px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; color: #F4320B; }
     
-    /* CUSTOM FILE UPLOAD STYLE - VARIASI KEREN */
-    .file-upload-wrapper {
-      position: relative;
-      margin: 12px 0;
-    }
-    .file-upload-wrapper input[type="file"] {
-      position: absolute;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      z-index: 2;
-    }
-    .file-upload-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 14px 20px;
-      background: linear-gradient(135deg, rgba(244,50,11,0.2), rgba(255,15,123,0.1));
-      border: 2px dashed rgba(244,50,11,0.5);
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 500;
-      backdrop-filter: blur(5px);
-    }
-    .file-upload-label:hover {
-      background: linear-gradient(135deg, rgba(244,50,11,0.4), rgba(255,15,123,0.2));
-      border-color: #F4320B;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(244,50,11,0.3);
-    }
-    .file-upload-label i {
-      font-size: 1.3rem;
-      color: #F4320B;
-    }
-    .file-name-display {
-      font-size: 0.7rem;
-      margin-top: 8px;
-      margin-left: 12px;
-      color: #9aa4bf;
-      word-break: break-all;
-    }
-    
-    /* Variasi untuk tiap file input */
+    /* CUSTOM FILE UPLOAD STYLE */
+    .file-upload-wrapper { position: relative; margin: 12px 0; }
+    .file-upload-wrapper input[type="file"] { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2; }
+    .file-upload-label { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px 20px; background: linear-gradient(135deg, rgba(244,50,11,0.2), rgba(255,15,123,0.1)); border: 2px dashed rgba(244,50,11,0.5); border-radius: 50px; cursor: pointer; transition: all 0.3s; font-weight: 500; backdrop-filter: blur(5px); }
+    .file-upload-label:hover { background: linear-gradient(135deg, rgba(244,50,11,0.4), rgba(255,15,123,0.2)); border-color: #F4320B; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(244,50,11,0.3); }
+    .file-upload-label i { font-size: 1.3rem; color: #F4320B; }
+    .file-name-display { font-size: 0.7rem; margin-top: 8px; margin-left: 12px; color: #9aa4bf; word-break: break-all; }
     .steg-upload .file-upload-label { background: linear-gradient(135deg, rgba(244,50,11,0.15), rgba(255,15,123,0.08)); border-style: solid; }
-    .steg-upload .file-upload-label:hover { background: linear-gradient(135deg, rgba(244,50,11,0.35), rgba(255,15,123,0.2)); }
     .exif-upload .file-upload-label { background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(0,100,255,0.08)); border-color: rgba(0,200,255,0.5); }
     .exif-upload .file-upload-label:hover { border-color: #00ccff; box-shadow: 0 5px 15px rgba(0,200,255,0.3); }
     .exif-upload .file-upload-label i { color: #00ccff; }
@@ -149,7 +108,6 @@
     
     .result-box { background: rgba(10, 14, 26, 0.8); padding: 15px; border-radius: 24px; margin-top: 15px; font-size: 0.75rem; word-break: break-word; max-height: 200px; overflow-y: auto; border: 1px solid rgba(244,50,11,0.2); font-family: monospace; }
     
-    /* BUTTON STYLE UNTUK STEG & EXIF */
     #embedStegBtn, #extractStegBtn, #readExifBtn { width: 100%; padding: 14px; border: none; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
     #embedStegBtn { background: linear-gradient(135deg, #F4320B, #FF0F7B); color: white; box-shadow: 0 4px 15px rgba(244,50,11,0.3); }
     #embedStegBtn:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(244,50,11,0.5); }
@@ -159,19 +117,22 @@
     #readExifBtn:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(26,107,138,0.5); }
     
     hr { margin: 20px 0; border-color: rgba(255,255,255,0.1); }
-    
     .footer-note { text-align: center; font-size: 0.7rem; margin-top: 28px; color: #6f78a5; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    
     .login-overlay { position: fixed; inset: 0; background: rgba(3, 5, 10, 0.98); backdrop-filter: blur(20px); z-index: 20000; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
     .login-overlay.hide { opacity: 0; visibility: hidden; pointer-events: none; }
     .login-card { max-width: 380px; width: 90%; background: rgba(10, 12, 22, 0.95); border-radius: 60px; border: 2px solid rgba(244, 50, 11, 0.5); padding: 40px 28px; text-align: center; box-shadow: 0 0 50px rgba(244,50,11,0.2); }
-    .login-card img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 20px; border: 3px solid #F4320B; object-fit: cover; }
+    .login-card .login-icon { width: 90px; height: 90px; background: linear-gradient(135deg, #F4320B, #FF0F7B); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+    .login-card .login-icon i { font-size: 50px; color: white; }
     .login-card h2 { font-size: 2rem; margin-bottom: 10px; }
     .login-input { width: 100%; padding: 14px 20px; margin: 12px 0; background: rgba(0, 0, 0, 0.6); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 50px; color: white; font-size: 1rem; transition: 0.2s; }
     .login-input:focus { border-color: #F4320B; box-shadow: 0 0 10px rgba(244,50,11,0.3); }
+    
     .welcome-overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px); z-index: 10000; opacity: 0; visibility: hidden; transition: 0.3s; }
     .welcome-overlay.active { opacity: 1; visibility: visible; }
     .welcome-card { background: linear-gradient(135deg, rgba(10,12,22,0.95), rgba(20,15,35,0.95)); border-radius: 60px; padding: 35px; text-align: center; border: 2px solid #F4320B; animation: bounceIn 0.5s ease; }
     @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    
     .user-badge { display: flex; align-items: center; gap: 12px; }
     .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(244,50,11,0.4); padding: 8px 14px; border-radius: 40px; font-size: 0.75rem; cursor: pointer; transition: 0.2s; }
     .logout-btn:hover { background: rgba(244,50,11,0.3); transform: scale(1.05); }
@@ -187,7 +148,7 @@
 
 <div id="loginOverlay" class="login-overlay">
   <div class="login-card">
-    <img src="https://files.catbox.moe/eofpqx.jpg" alt="Logo">
+    <div class="login-icon"><i class="fas fa-bolt"></i></div>
     <h2 style="background: linear-gradient(135deg,#FF512F,#F09819); -webkit-background-clip:text; background-clip:text; color:transparent;">VXZ UNBAN</h2>
     <p style="margin-bottom: 15px; opacity:0.7;">Login untuk mengakses tools</p>
     <input type="text" id="loginUsername" class="login-input" placeholder="Username">
@@ -201,7 +162,10 @@
 
 <div id="app" class="container" style="display: none;">
   <div class="hero">
-    <div class="logo-badge"><div class="icon-glow"><img src="https://files.catbox.moe/eofpqx.jpg" alt="logo"></div><div><div class="title-glow">VXZ UNBAN</div><div class="sub">v9 · Full Unban + Steg + Exif</div></div></div>
+    <div class="logo-badge">
+      <div class="icon-glow"><i class="fas fa-shield-haltered"></i></div>
+      <div><div class="title-glow">VXZ UNBAN</div><div class="sub">v10 · Full Unban + Steg + Exif</div></div>
+    </div>
     <div class="user-badge"><span id="userRoleBadge" style="font-size:0.7rem; background:rgba(244,50,11,0.2); padding:5px 12px; border-radius:30px;"></span><div class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</div></div>
   </div>
 
@@ -215,7 +179,7 @@
   </div>
 
   <div class="robot-card glass-card">
-    <div class="avatar-frame"><div class="avatar-inner"><img src="https://files.catbox.moe/eofpqx.jpg" alt="robot"></div></div>
+    <div class="avatar-frame"><div class="avatar-inner"><i class="fas fa-robot"></i></div></div>
     <div class="robot-name">VXZ CYBER</div>
     <div class="badge-status"><i class="fas fa-circle" style="font-size:0.5rem;"></i> SYSTEM ONLINE • READY</div>
   </div>
@@ -234,32 +198,21 @@
   
   <div id="stegPanel" class="tool-panel active glass-card">
     <h4><i class="fas fa-lock"></i> Steghide - Sembunyikan Pesan</h4>
-    
-    <!-- Custom file upload untuk embed -->
     <div class="file-upload-wrapper steg-upload">
       <input type="file" id="stegImage" accept="image/jpeg,image/png">
-      <div class="file-upload-label" id="stegUploadLabel">
-        <i class="fas fa-image"></i> Pilih Gambar untuk Disembunyikan
-      </div>
+      <div class="file-upload-label"><i class="fas fa-image"></i> Pilih Gambar untuk Disembunyikan</div>
       <div id="stegFileName" class="file-name-display">Belum ada file dipilih</div>
     </div>
-    
     <textarea id="stegMessage" placeholder="✍️ Pesan rahasia yang ingin disembunyikan..." rows="3"></textarea>
     <input type="password" id="stegPass" placeholder="🔒 Password (opsional)" class="modern-input" style="margin:10px 0;">
     <button id="embedStegBtn"><i class="fas fa-arrow-down"></i> Embed Pesan ke Gambar</button>
-    
     <hr>
-    
     <h4><i class="fas fa-unlock-alt"></i> Ekstrak Pesan</h4>
-    <!-- Custom file upload untuk extract -->
     <div class="file-upload-wrapper steg-upload">
       <input type="file" id="stegExtractFile" accept="image/jpeg,image/png">
-      <div class="file-upload-label" id="stegExtractLabel">
-        <i class="fas fa-folder-open"></i> Pilih Gambar yang Berisi Pesan
-      </div>
+      <div class="file-upload-label"><i class="fas fa-folder-open"></i> Pilih Gambar yang Berisi Pesan</div>
       <div id="stegExtractFileName" class="file-name-display">Belum ada file dipilih</div>
     </div>
-    
     <input type="password" id="stegExtractPass" placeholder="🔒 Password (jika ada)" class="modern-input" style="margin:10px 0;">
     <button id="extractStegBtn"><i class="fas fa-arrow-up"></i> Ekstrak Pesan</button>
     <div id="stegResult" class="result-box">📁 Hasil ekstraksi akan muncul di sini...</div>
@@ -267,12 +220,9 @@
   
   <div id="exifPanel" class="tool-panel glass-card">
     <h4><i class="fas fa-info-circle"></i> ExifTool - Metadata Gambar</h4>
-    <!-- Custom file upload untuk exif -->
     <div class="file-upload-wrapper exif-upload">
       <input type="file" id="exifImage" accept="image/jpeg,image/png,image/jpg">
-      <div class="file-upload-label" id="exifUploadLabel">
-        <i class="fas fa-camera-retro"></i> Pilih Gambar untuk Baca Metadata
-      </div>
+      <div class="file-upload-label"><i class="fas fa-camera-retro"></i> Pilih Gambar untuk Baca Metadata</div>
       <div id="exifFileName" class="file-name-display">Belum ada file dipilih</div>
     </div>
     <button id="readExifBtn"><i class="fas fa-search"></i> Baca Metadata EXIF</button>
@@ -377,8 +327,7 @@ sendBtn?.addEventListener('click',()=>{
     function resetBtn(){ sendBtn.disabled=false; sendBtn.innerHTML='<i class="fas fa-bolt"></i> UNBANNED SEKARANG'; setStatus("✔️ Email siap, kirim banding dan tunggu proses."); }
 });
 
-// ======================== STEGHIDE dengan custom file name display ========================
-// File name display untuk steg image
+// ======================== STEGHIDE ========================
 document.getElementById('stegImage')?.addEventListener('change', function(e) {
     const fileName = this.files[0]?.name || 'Belum ada file dipilih';
     document.getElementById('stegFileName').innerHTML = `<i class="fas fa-check-circle" style="color:#2effb6;"></i> ${fileName}`;
