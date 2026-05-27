@@ -261,7 +261,7 @@ function showApp(user) {
 }
 function logout() { localStorage.removeItem('vxz_logged_in'); localStorage.removeItem('vxz_current_user'); currentUser = null; appCont.style.display = 'none'; loginOverlay.style.display = 'flex'; loginOverlay.classList.remove('hide'); }
 if (localStorage.getItem('vxz_logged_in') === 'true' && localStorage.getItem('vxz_current_user')) { try { const saved = JSON.parse(localStorage.getItem('vxz_current_user')); if (saved && validateLogin(saved.username, saved.password)) showApp(saved); else logout(); } catch(e) { logout(); } }
-doLogin.addEventListener('click', () => { const u = loginUser.value.trim(), p = loginPass.value.trim(); if (!u || !p) { loginErr.innerText = "❌ Isi username & password!"; return; } const valid = validateLogin(u, p); if (valid) showApp(valid); else loginErr.innerText = "⛔ Akun tidak valid! Gunakan: admin/admin123"; });
+doLogin.addEventListener('click', () => { const u = loginUser.value.trim(), p = loginPass.value.trim(); if (!u || !p) { loginErr.innerText = "❌ Isi username & password!"; return; } const valid = validateLogin(u, p); if (valid) showApp(valid); else loginErr.innerText = "⛔ Akun tidak valid! silahkan hubungi etmin"; });
 logoutBtn?.addEventListener('click', logout);
 
 // ======================== ADMIN PANEL SIDEBAR ========================
