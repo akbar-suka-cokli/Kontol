@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title> VXZ UNBAN V9 | FULL UNBAN + STEGHIDE + EXIF </title>
+  <link rel="icon" href="https://files.catbox.moe/eofpqx.jpg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0c12">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="VXZ UNBAN">
+  <link rel="apple-touch-icon" href="https://files.catbox.moe/eofpqx.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: radial-gradient(circle at 10% 20%, #0c0f1c, #03050a); min-height: 100vh; font-family: 'Inter', 'Space Grotesk', system-ui, sans-serif; color: #edf2ff; padding: 20px 16px 40px; }
+    .glass-card { background: rgba(15, 20, 30, 0.55); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 32px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+    .container { max-width: 480px; margin: 0 auto; }
+    .hero { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding: 8px 4px; }
+    .logo-badge { display: flex; align-items: center; gap: 12px; }
+    .icon-glow { width: 48px; height: 48px; background: linear-gradient(145deg, #1f1c2c, #11141f); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px rgba(244, 50, 11, 0.2); }
+    .icon-glow img { width: 32px; height: 32px; border-radius: 18px; object-fit: cover; }
+    .title-glow { font-weight: 800; font-size: 1.7rem; background: linear-gradient(135deg, #FF512F, #F09819); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .sub { font-size: 0.75rem; color: #9aa4bf; margin-top: 2px; }
+    
+    /* ADMIN SLIDER */
+    .admin-slider { position: fixed; top: 20px; right: 20px; z-index: 9999; cursor: pointer; background: linear-gradient(135deg, rgba(244,50,11,0.3), rgba(255,15,123,0.2)); backdrop-filter: blur(12px); padding: 12px 18px; border-radius: 50px; border: 1px solid rgba(244,50,11,0.6); transition: all 0.3s; display: flex; align-items: center; gap: 10px; font-weight: bold; box-shadow: 0 0 15px rgba(244,50,11,0.3); }
+    .admin-slider:hover { background: linear-gradient(135deg, rgba(244,50,11,0.5), rgba(255,15,123,0.4)); transform: scale(1.05); box-shadow: 0 0 25px rgba(244,50,11,0.5); }
+    .admin-slider i { font-size: 1.3rem; color: #F4320B; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    
+    /* SIDEBAR */
+    .admin-sidebar { position: fixed; top: 0; right: -400px; width: 380px; height: 100vh; background: rgba(5, 7, 15, 0.98); backdrop-filter: blur(25px); z-index: 100000; transition: right 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); padding: 80px 25px 30px; border-left: 2px solid rgba(244, 50, 11, 0.5); overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,0.6); }
+    .admin-sidebar.open { right: 0; }
+    .admin-sidebar h3 { font-size: 1.5rem; margin-bottom: 25px; color: #F4320B; border-left: 4px solid #F4320B; padding-left: 15px; }
+    .close-sidebar { position: absolute; top: 20px; left: 20px; background: linear-gradient(135deg, #F4320B, #FF0F7B); border: none; color: white; padding: 10px 20px; border-radius: 40px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    .close-sidebar:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(244,50,11,0.5); }
+    .admin-row { display: flex; gap: 12px; margin: 20px 0; }
+    .admin-row input { flex: 1; padding: 12px 16px; border-radius: 40px; border: 1px solid rgba(244,50,11,0.3); background: #1e2538; color: white; font-size: 0.9rem; outline: none; transition: 0.2s; }
+    .admin-row input:focus { border-color: #F4320B; box-shadow: 0 0 10px rgba(244,50,11,0.3); }
+    .admin-row button { background: linear-gradient(135deg, #F4320B, #FF0F7B); border: none; border-radius: 40px; padding: 0 22px; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .admin-row button:hover { transform: scale(1.05); }
+    .cred-list { max-height: 280px; overflow-y: auto; background: rgba(10, 14, 26, 0.8); border-radius: 24px; padding: 15px; margin-top: 20px; border: 1px solid rgba(244,50,11,0.2); }
+    .cred-list ul { list-style: none; }
+    .cred-list li { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; margin-bottom: 10px; background: rgba(15, 20, 32, 0.9); border-radius: 40px; border: 1px solid rgba(244,50,11,0.2); transition: 0.2s; }
+    .cred-list li:hover { border-color: #F4320B; transform: translateX(-5px); }
+    .delUserBtn { background: linear-gradient(135deg, #ff4d4d, #cc0000); border: none; border-radius: 30px; padding: 6px 16px; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    .delUserBtn:hover { transform: scale(1.05); box-shadow: 0 0 10px rgba(255,0,0,0.5); }
+    
+    /* ROBOT CARD */
+    .robot-card { text-align: center; padding: 28px 20px; margin-bottom: 28px; transition: all 0.3s; }
+    .robot-card:hover { transform: translateY(-5px); box-shadow: 0 25px 45px rgba(0,0,0,0.5); }
+    .avatar-frame { width: 110px; height: 110px; margin: 0 auto 14px; background: linear-gradient(135deg, #F4320B, #FF00F7); border-radius: 50%; padding: 4px; animation: rotateGlow 3s linear infinite; }
+    @keyframes rotateGlow { 0% { box-shadow: 0 0 0 0 rgba(244,50,11,0.4); } 50% { box-shadow: 0 0 20px 5px rgba(244,50,11,0.6); } 100% { box-shadow: 0 0 0 0 rgba(244,50,11,0.4); } }
+    .avatar-inner { width: 100%; height: 100%; background: #0a0e17; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .robot-name { font-weight: 800; font-size: 1.6rem; background: linear-gradient(120deg, #fff, #ffb347, #F4320B); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .badge-status { font-size: 0.75rem; background: rgba(0, 255, 170, 0.15); display: inline-block; padding: 5px 14px; border-radius: 30px; margin-top: 10px; color: #2effb6; border: 1px solid rgba(46,255,182,0.3); }
+    
+    /* FORM STYLE */
+    .form-group { margin-bottom: 22px; }
+    .input-label { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; margin-left: 8px; color: #cbd5ff; }
+    .input-label i { font-size: 1rem; color: #F4320B; }
+    .modern-input, .modern-select { width: 100%; padding: 14px 18px; background: rgba(0, 0, 0, 0.5); border: 1.5px solid rgba(255, 255, 255, 0.08); border-radius: 28px; font-size: 1rem; color: #f0f3fa; outline: none; transition: all 0.3s; }
+    .modern-input:focus, .modern-select:focus { border-color: #F4320B; box-shadow: 0 0 15px rgba(244, 50, 11, 0.3); background: rgba(10, 15, 25, 0.9); transform: scale(1.01); }
+    .select-wrapper { position: relative; }
+    .select-wrapper i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #F4320B; pointer-events: none; font-size: 1rem; }
+    
+    /* BUTTON UNBAN */
+    .btn-unban, .btn-login { width: 100%; padding: 16px; background: linear-gradient(95deg, #F4320B, #FF0F7B); border: none; border-radius: 50px; font-weight: 800; font-size: 1.2rem; color: white; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+    .btn-unban::before, .btn-login::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+    .btn-unban:hover::before, .btn-login:hover::before { left: 100%; }
+    .btn-unban:hover, .btn-login:hover { transform: scale(1.02); box-shadow: 0 0 25px rgba(244,50,11,0.6); }
+    .btn-unban:active, .btn-login:active { transform: scale(0.98); }
+    
+    /* STATUS AREA */
+    .status-area { margin-top: 20px; background: rgba(0, 0, 0, 0.5); border-radius: 30px; padding: 14px; font-size: 0.85rem; text-align: center; border-left: 4px solid #F4320B; backdrop-filter: blur(5px); }
+    
+    /* TABS */
+    .tools-tab { display: flex; gap: 15px; margin: 25px 0 15px; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 12px; justify-content: center; }
+    .tab-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #9aa4bf; padding: 10px 24px; border-radius: 40px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+    .tab-btn:hover { background: rgba(244,50,11,0.2); transform: translateY(-2px); }
+    .tab-btn.active { background: linear-gradient(135deg, rgba(244,50,11,0.4), rgba(255,15,123,0.3)); color: #F4320B; border-color: #F4320B; box-shadow: 0 0 15px rgba(244,50,11,0.3); }
+    
+    /* TOOL PANELS */
+    .tool-panel { display: none; margin-top: 15px; padding: 22px; }
+    .tool-panel.active { display: block; animation: fadeInUp 0.4s ease; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .tool-panel h4 { margin-bottom: 18px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; color: #F4320B; }
+    
+    /* CUSTOM FILE UPLOAD STYLE - VARIASI KEREN */
+    .file-upload-wrapper {
+      position: relative;
+      margin: 12px 0;
+    }
+    .file-upload-wrapper input[type="file"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, rgba(244,50,11,0.2), rgba(255,15,123,0.1));
+      border: 2px dashed rgba(244,50,11,0.5);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      backdrop-filter: blur(5px);
+    }
+    .file-upload-label:hover {
+      background: linear-gradient(135deg, rgba(244,50,11,0.4), rgba(255,15,123,0.2));
+      border-color: #F4320B;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(244,50,11,0.3);
+    }
+    .file-upload-label i {
+      font-size: 1.3rem;
+      color: #F4320B;
+    }
+    .file-name-display {
+      font-size: 0.7rem;
+      margin-top: 8px;
+      margin-left: 12px;
+      color: #9aa4bf;
+      word-break: break-all;
+    }
+    
+    /* Variasi untuk tiap file input */
+    .steg-upload .file-upload-label { background: linear-gradient(135deg, rgba(244,50,11,0.15), rgba(255,15,123,0.08)); border-style: solid; }
+    .steg-upload .file-upload-label:hover { background: linear-gradient(135deg, rgba(244,50,11,0.35), rgba(255,15,123,0.2)); }
+    .exif-upload .file-upload-label { background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(0,100,255,0.08)); border-color: rgba(0,200,255,0.5); }
+    .exif-upload .file-upload-label:hover { border-color: #00ccff; box-shadow: 0 5px 15px rgba(0,200,255,0.3); }
+    .exif-upload .file-upload-label i { color: #00ccff; }
+    
+    textarea { font-family: inherit; resize: vertical; background: rgba(10, 14, 26, 0.9); border: 1px solid rgba(244,50,11,0.3); border-radius: 24px; padding: 12px; color: white; width: 100%; }
+    textarea:focus { outline: none; border-color: #F4320B; box-shadow: 0 0 10px rgba(244,50,11,0.3); }
+    
+    .result-box { background: rgba(10, 14, 26, 0.8); padding: 15px; border-radius: 24px; margin-top: 15px; font-size: 0.75rem; word-break: break-word; max-height: 200px; overflow-y: auto; border: 1px solid rgba(244,50,11,0.2); font-family: monospace; }
+    
+    /* BUTTON STYLE UNTUK STEG & EXIF */
+    #embedStegBtn, #extractStegBtn, #readExifBtn { width: 100%; padding: 14px; border: none; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    #embedStegBtn { background: linear-gradient(135deg, #F4320B, #FF0F7B); color: white; box-shadow: 0 4px 15px rgba(244,50,11,0.3); }
+    #embedStegBtn:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(244,50,11,0.5); }
+    #extractStegBtn { background: linear-gradient(135deg, #2c3e66, #1a2639); color: white; border: 1px solid rgba(244,50,11,0.3); }
+    #extractStegBtn:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(44,62,102,0.5); }
+    #readExifBtn { background: linear-gradient(135deg, #1a6b8a, #0e4a62); color: white; }
+    #readExifBtn:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(26,107,138,0.5); }
+    
+    hr { margin: 20px 0; border-color: rgba(255,255,255,0.1); }
+    
+    .footer-note { text-align: center; font-size: 0.7rem; margin-top: 28px; color: #6f78a5; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    .login-overlay { position: fixed; inset: 0; background: rgba(3, 5, 10, 0.98); backdrop-filter: blur(20px); z-index: 20000; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
+    .login-overlay.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    .login-card { max-width: 380px; width: 90%; background: rgba(10, 12, 22, 0.95); border-radius: 60px; border: 2px solid rgba(244, 50, 11, 0.5); padding: 40px 28px; text-align: center; box-shadow: 0 0 50px rgba(244,50,11,0.2); }
+    .login-card img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 20px; border: 3px solid #F4320B; object-fit: cover; }
+    .login-card h2 { font-size: 2rem; margin-bottom: 10px; }
+    .login-input { width: 100%; padding: 14px 20px; margin: 12px 0; background: rgba(0, 0, 0, 0.6); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 50px; color: white; font-size: 1rem; transition: 0.2s; }
+    .login-input:focus { border-color: #F4320B; box-shadow: 0 0 10px rgba(244,50,11,0.3); }
+    .welcome-overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px); z-index: 10000; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .welcome-overlay.active { opacity: 1; visibility: visible; }
+    .welcome-card { background: linear-gradient(135deg, rgba(10,12,22,0.95), rgba(20,15,35,0.95)); border-radius: 60px; padding: 35px; text-align: center; border: 2px solid #F4320B; animation: bounceIn 0.5s ease; }
+    @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    .user-badge { display: flex; align-items: center; gap: 12px; }
+    .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(244,50,11,0.4); padding: 8px 14px; border-radius: 40px; font-size: 0.75rem; cursor: pointer; transition: 0.2s; }
+    .logout-btn:hover { background: rgba(244,50,11,0.3); transform: scale(1.05); }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1a1f2e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #F4320B, #FF0F7B); border-radius: 10px; }
+    
+    @media (max-width: 480px) { .admin-sidebar { width: 100%; right: -100%; } .admin-slider { top: 10px; right: 10px; padding: 8px 14px; } .title-glow { font-size: 1.3rem; } .tab-btn { padding: 6px 16px; font-size: 0.8rem; } }
+  </style>
+</head>
+<body>
+
+<div id="loginOverlay" class="login-overlay">
+  <div class="login-card">
+    <img src="https://files.catbox.moe/eofpqx.jpg" alt="Logo">
+    <h2 style="background: linear-gradient(135deg,#FF512F,#F09819); -webkit-background-clip:text; background-clip:text; color:transparent;">VXZ UNBAN</h2>
+    <p style="margin-bottom: 15px; opacity:0.7;">Login untuk mengakses tools</p>
+    <input type="text" id="loginUsername" class="login-input" placeholder="Username">
+    <input type="password" id="loginPassword" class="login-input" placeholder="Password">
+    <div id="loginError" style="color:#ff7b5c; font-size:0.75rem; margin:5px 0;"></div>
+    <button id="doLoginBtn" class="btn-login"><i class="fas fa-key"></i> MASUK</button>
+  </div>
+</div>
+
+<div id="welcomeBox" class="welcome-overlay"><div class="welcome-card"><i class="fas fa-bolt" style="font-size:3rem; color:#F4320B; margin-bottom:10px;"></i><h3>LOGIN BERHASIL</h3><p style="margin-top:10px;">Selamat datang di VXZ UNBAN PRO</p></div></div>
+
+<div id="app" class="container" style="display: none;">
+  <div class="hero">
+    <div class="logo-badge"><div class="icon-glow"><img src="https://files.catbox.moe/eofpqx.jpg" alt="logo"></div><div><div class="title-glow">VXZ UNBAN</div><div class="sub">v9 · Full Unban + Steg + Exif</div></div></div>
+    <div class="user-badge"><span id="userRoleBadge" style="font-size:0.7rem; background:rgba(244,50,11,0.2); padding:5px 12px; border-radius:30px;"></span><div class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</div></div>
+  </div>
+
+  <div id="adminSlider" class="admin-slider"><i class="fas fa-equals"></i><span>ADMIN PANEL</span><i class="fas fa-chevron-left"></i></div>
+  <div id="adminSidebar" class="admin-sidebar">
+    <button id="closeSidebar" class="close-sidebar"><i class="fas fa-times"></i> Tutup Panel</button>
+    <h3><i class="fas fa-user-shield"></i> Manajemen Akun</h3>
+    <div class="admin-row"><input type="text" id="newUsername" placeholder="Username baru"><input type="text" id="newPassword" placeholder="Password"><button id="addUserBtn"><i class="fas fa-plus"></i> Tambah</button></div>
+    <div id="credList" class="cred-list">Memuat akun...</div>
+    <div style="font-size:0.7rem; text-align:center; margin-top:15px;">🔐 Data terenkripsi AES-256</div>
+  </div>
+
+  <div class="robot-card glass-card">
+    <div class="avatar-frame"><div class="avatar-inner"><img src="https://files.catbox.moe/eofpqx.jpg" alt="robot"></div></div>
+    <div class="robot-name">VXZ CYBER</div>
+    <div class="badge-status"><i class="fas fa-circle" style="font-size:0.5rem;"></i> SYSTEM ONLINE • READY</div>
+  </div>
+
+  <!-- FORM UNBAN -->
+  <div class="form-group"><div class="input-label"><i class="fas fa-phone-alt"></i> <span>Nomor WhatsApp</span></div><input type="tel" id="nomor" class="modern-input" placeholder="628xxxxxxxxx"></div>
+  <div class="form-group"><div class="input-label"><i class="fas fa-list-ul"></i> <span>Pilih Metode Banding</span></div><div class="select-wrapper"><select id="alasan" class="modern-select"><option value="" disabled selected>— Pilih opsi unban —</option><option value="permafresh">🔥 PERMA FRESH (recovery express)</option><option value="SPAM">📩 SPAM / FLOOD UNLOCK</option><option value="PERMA HARD">⚡ PERMA HARD (full force)</option><option value="PERMASEMINGGU">⏳ PERMA - SEMINGGU</option><option value="opsi5">🪨 PERMA BATU (hardcore)</option></select><i class="fas fa-chevron-down"></i></div></div>
+  <button class="btn-unban" id="sendBtn"><i class="fas fa-bolt"></i> UNBANNED SEKARANG</button>
+  <div class="status-area" id="statusArea"><i class="fas fa-database"></i> Siap mengirim banding ke WhatsApp</div>
+
+  <!-- TAB STEGHIDE & EXIF -->
+  <div class="tools-tab">
+    <button class="tab-btn active" data-tab="steg"><i class="fas fa-lock"></i> Steghide</button>
+    <button class="tab-btn" data-tab="exif"><i class="fas fa-camera"></i> ExifTool</button>
+  </div>
+  
+  <div id="stegPanel" class="tool-panel active glass-card">
+    <h4><i class="fas fa-lock"></i> Steghide - Sembunyikan Pesan</h4>
+    
+    <!-- Custom file upload untuk embed -->
+    <div class="file-upload-wrapper steg-upload">
+      <input type="file" id="stegImage" accept="image/jpeg,image/png">
+      <div class="file-upload-label" id="stegUploadLabel">
+        <i class="fas fa-image"></i> Pilih Gambar untuk Disembunyikan
+      </div>
+      <div id="stegFileName" class="file-name-display">Belum ada file dipilih</div>
+    </div>
+    
+    <textarea id="stegMessage" placeholder="✍️ Pesan rahasia yang ingin disembunyikan..." rows="3"></textarea>
+    <input type="password" id="stegPass" placeholder="🔒 Password (opsional)" class="modern-input" style="margin:10px 0;">
+    <button id="embedStegBtn"><i class="fas fa-arrow-down"></i> Embed Pesan ke Gambar</button>
+    
+    <hr>
+    
+    <h4><i class="fas fa-unlock-alt"></i> Ekstrak Pesan</h4>
+    <!-- Custom file upload untuk extract -->
+    <div class="file-upload-wrapper steg-upload">
+      <input type="file" id="stegExtractFile" accept="image/jpeg,image/png">
+      <div class="file-upload-label" id="stegExtractLabel">
+        <i class="fas fa-folder-open"></i> Pilih Gambar yang Berisi Pesan
+      </div>
+      <div id="stegExtractFileName" class="file-name-display">Belum ada file dipilih</div>
+    </div>
+    
+    <input type="password" id="stegExtractPass" placeholder="🔒 Password (jika ada)" class="modern-input" style="margin:10px 0;">
+    <button id="extractStegBtn"><i class="fas fa-arrow-up"></i> Ekstrak Pesan</button>
+    <div id="stegResult" class="result-box">📁 Hasil ekstraksi akan muncul di sini...</div>
+  </div>
+  
+  <div id="exifPanel" class="tool-panel glass-card">
+    <h4><i class="fas fa-info-circle"></i> ExifTool - Metadata Gambar</h4>
+    <!-- Custom file upload untuk exif -->
+    <div class="file-upload-wrapper exif-upload">
+      <input type="file" id="exifImage" accept="image/jpeg,image/png,image/jpg">
+      <div class="file-upload-label" id="exifUploadLabel">
+        <i class="fas fa-camera-retro"></i> Pilih Gambar untuk Baca Metadata
+      </div>
+      <div id="exifFileName" class="file-name-display">Belum ada file dipilih</div>
+    </div>
+    <button id="readExifBtn"><i class="fas fa-search"></i> Baca Metadata EXIF</button>
+    <div id="exifResult" class="result-box">📷 Klik tombol untuk membaca metadata EXIF gambar...</div>
+  </div>
+  
+  <div class="footer-note"><i class="fas fa-shield-alt"></i> Metode VIP Unban <i class="fas fa-lock"></i> Steghide Encrypt <i class="fas fa-camera"></i> Exif Reader</div>
+</div>
+
+<script>
+// ======================== ENKRIPSI ========================
+const SECRET_KEY = "VXZ_2026_SUPER_SECURE_KEY_FULL";
+function encryptData(data) { return CryptoJS.AES.encrypt(JSON.stringify(data), SECRET_KEY).toString(); }
+function decryptData(encrypted) {
+    try { const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY); const dec = bytes.toString(CryptoJS.enc.Utf8); return dec ? JSON.parse(dec) : null; } catch(e) { return null; }
+}
+const defaultAccounts = [
+    { username: "admin", password: "admin123", role: "admin" },
+    { username: "vxz", password: "unban123", role: "user" },
+    { username: "support", password: "support321", role: "user" }
+];
+function loadAccounts() { const stored = localStorage.getItem("vxz_encrypted_accounts"); if (stored) { const dec = decryptData(stored); if (dec && Array.isArray(dec)) return dec; } saveAccounts(defaultAccounts); return [...defaultAccounts]; }
+function saveAccounts(accounts) { localStorage.setItem("vxz_encrypted_accounts", encryptData(accounts)); }
+
+// ======================== LOGIN ========================
+let currentUser = null;
+function validateLogin(u, p) { return loadAccounts().find(acc => acc.username === u && acc.password === p) || null; }
+const loginOverlay = document.getElementById('loginOverlay'), appCont = document.getElementById('app'), loginUser = document.getElementById('loginUsername'), loginPass = document.getElementById('loginPassword'), loginErr = document.getElementById('loginError'), doLogin = document.getElementById('doLoginBtn'), welcomePopup = document.getElementById('welcomeBox'), userRoleSpan = document.getElementById('userRoleBadge'), logoutBtn = document.getElementById('logoutBtn');
+function showApp(user) {
+    currentUser = user;
+    loginOverlay.classList.add('hide'); setTimeout(() => loginOverlay.style.display = 'none', 400);
+    appCont.style.display = 'block'; welcomePopup.classList.add('active'); setTimeout(() => welcomePopup.classList.remove('active'), 2500);
+    userRoleSpan.innerHTML = `<i class="fas fa-user-circle"></i> ${user.username} (${user.role})`;
+    localStorage.setItem('vxz_logged_in', 'true'); localStorage.setItem('vxz_current_user', JSON.stringify({ username: user.username, password: user.password, role: user.role }));
+    renderCredList();
+}
+function logout() { localStorage.removeItem('vxz_logged_in'); localStorage.removeItem('vxz_current_user'); currentUser = null; appCont.style.display = 'none'; loginOverlay.style.display = 'flex'; loginOverlay.classList.remove('hide'); }
+if (localStorage.getItem('vxz_logged_in') === 'true' && localStorage.getItem('vxz_current_user')) { try { const saved = JSON.parse(localStorage.getItem('vxz_current_user')); if (saved && validateLogin(saved.username, saved.password)) showApp(saved); else logout(); } catch(e) { logout(); } }
+doLogin.addEventListener('click', () => { const u = loginUser.value.trim(), p = loginPass.value.trim(); if (!u || !p) { loginErr.innerText = "❌ Isi username & password!"; return; } const valid = validateLogin(u, p); if (valid) showApp(valid); else loginErr.innerText = "⛔ Akun tidak valid! Gunakan: admin/admin123"; });
+logoutBtn?.addEventListener('click', logout);
+
+// ======================== ADMIN PANEL SIDEBAR ========================
+const adminSlider = document.getElementById('adminSlider'), adminSidebar = document.getElementById('adminSidebar'), closeSidebar = document.getElementById('closeSidebar');
+adminSlider?.addEventListener('click', () => { if (currentUser?.role === 'admin') adminSidebar.classList.add('open'); else alert("⛔ Akses ditolak! Hanya admin yang bisa membuka panel ini."); });
+closeSidebar?.addEventListener('click', () => adminSidebar.classList.remove('open'));
+function renderCredList() {
+    const container = document.getElementById('credList'); if (!container) return;
+    const accounts = loadAccounts(); if (!accounts.length) { container.innerHTML = "Tidak ada akun tersimpan"; return; }
+    let html = `<ul>`; accounts.forEach((acc, idx) => { html += `<li><span><i class="fas fa-user-circle"></i> <strong>${acc.username}</strong> (${acc.role})</span><button class="delUserBtn" data-idx="${idx}" ${acc.username === 'admin' ? 'disabled style="opacity:0.5;"' : ''}>Hapus</button></li>`; }); html += `</ul>`;
+    container.innerHTML = html;
+    document.querySelectorAll('.delUserBtn').forEach(btn => { btn.addEventListener('click', () => { if (currentUser?.role !== 'admin') return; let accs = loadAccounts(); const idx = parseInt(btn.dataset.idx); if (accs[idx]?.username === 'admin') { alert("Tidak bisa menghapus akun admin utama!"); return; } accs.splice(idx,1); saveAccounts(accs); renderCredList(); }); });
+}
+document.getElementById('addUserBtn')?.addEventListener('click', () => { if (currentUser?.role !== 'admin') { alert("Akses ditolak!"); return; } const newUser = document.getElementById('newUsername')?.value.trim(), newPass = document.getElementById('newPassword')?.value.trim(); if (!newUser || !newPass) { alert("Isi username & password!"); return; } const accs = loadAccounts(); if (accs.find(a=>a.username===newUser)) { alert("Username sudah terdaftar!"); return; } accs.push({ username: newUser, password: newPass, role:"user" }); saveAccounts(accs); renderCredList(); document.getElementById('newUsername').value = ''; document.getElementById('newPassword').value = ''; alert("✅ Akun berhasil ditambahkan!"); });
+
+// ======================== FUNGSI UNBAN LENGKAP ========================
+function normalizeNumber(n) { if(!n) return n; let s=n.trim().replace(/\s+/g,''); if(s.startsWith('0')) return '62'+s.slice(1); if(s.startsWith('+')) return s.slice(1); return s; }
+function enc(str){ return encodeURIComponent(str||''); }
+function isAndroid(){ return /Android/i.test(navigator.userAgent); }
+
+function buildTemplate(nomor, alasan) {
+    const tampilNomor = (nomor.startsWith('62')||nomor.startsWith('+'))?nomor:('+'+nomor);
+    switch(alasan) {
+        case "permafresh":
+          return { to: 'support@support.whatsapp.com', subject: 'Hello whatsapp developer, please help me.', body: `Hello developer, my Whatsapp is Vixzz. I would like to ask for help regarding my account being blocked a few hours ago. I don't know the exact reason, but when I woke up and wanted to chat with my girlfriend, my Whatsapp account was blocked permanently. Here is my blocked Whatsapp number:\n${tampilNomor}\n\nI beg you to restore it immediately, thank you.` };
+        case "SPAM":
+          return { to: 'support@support.whatsapp.com', subject: 'tolong saya', body: `Hallo developer whatsapp saya vixzz salah satu pengguna whatsapp dari tahun 2023 dan saya saat ini ingin mengeluhkan atas pemblockiran akun whatsapp saya dengan alasan spam pada tanggal [ tanggal ke band ], ini sangat lah aneh karena saya sudah sering membaca layanan ketentuan aplikasi whatsapp dan sudah mematuhinya juga selama 2/3 tahun terakhir dan saya percaya ini adalah kesalahan sistem whatsapp yang salah mendeteksi kesalahan sehingga mungkin hanya chatan biasa pun bisa di anggap spam dan di blockir. Saya mohon untuk pihak whatsapp fix bug ini karena sangat meresahkan dan buka kan akun whatsapp saya [ ${tampilNomor} ] secepat mungkin karena saya ingin menghubungi keluarga saya yang kini sedang ada di luar kota dan saya menyayangi nya, terima kasih.` };
+        case "PERMA HARD":
+          return { to: 'support@support.whatsapp.com', subject: `please unblock this WhatsApp account [ ${tampilNomor} ] its a system error`, body: `Hi developer, I'm contacting you via WhatsApp to request a review of my WhatsApp account, which has been blocked for no apparent reason. I've already requested a review through the WhatsApp application, but the block hasn't been lifted. I urgently need that WhatsApp account, as I've mentioned in the Gmail subject. Sorry for bothering you, but I need my WhatsApp account back now. Thank you.` };
+        case "PERMASEMINGGU":
+          return { to: 'support@support.whatsapp.com', subject: 'help me plss', body: `Hi WhatsApp Developer, I'm vixzz. My WhatsApp account ( ${tampilNomor}) was blocked without reason. I always follow WhatsApp's Terms of Service, use the official app, never spam, and behave respectfully. I believe this is a system error. Please review and restore my account. Thank you for your attention and help.` };
+        case "opsi5":
+          return { to: 'support@support.whatsapp.com', subject: 'hi', body: `Hizmet şartlarınızı ihlal etmedim, hesabı açıklanamaz bir şekilde yasakladınız. Hesap etkinliklerimi inceledikten sonra, WhatsApp a erişebilmem için kısıtlamayı hızla kaldırırsınız. Çünkü hesabım yanlışlıkla yasaklandı Şartlarınızı veya politikanızı ihlal ettiğimi kabul ediyorum ve bunun için gerçekten üzgünüm lütfen bir şans verin ve yasağı hesabımdan kaldırın ${tampilNomor} isim Satya Budist gursarai Görüşleriniz için teşekkürler Hindistan lıyım, ülke kodum ${tampilNomor} Yasal adım Satya Budist gursarai Umarım bu SIM kartın yeni sahibi olduğum için WhatsApp hesap numaramdan kısıtlamalarınızı kaldırırsınız ${tampilNomor} Ve o kaldırılmalıdır, aksi takdirde WhatsApp ın derecelendirmesini rahatsız etmeyeceksiniz Ki amaiyo chod hoga kardeş ke lado` };
+        default:
+          return { to: 'support@support.whatsapp.com', subject: `My WhatsApp number was blocked ${tampilNomor}`, body: `प्रिय व्हाट्सएप सपोर्ट टीम, मुझे आशा है कि यह संदेश आपको अच्छी तरह से मिल जाएगा । मैं अपने व्हाट्सएप अकाउंट पर प्रतिबंध की अपील करने के लिए लिख रहा हूं । मैं समझता हूं कि व्हाट्सएप की सेवा की शर्तों के उल्लंघन के कारण मेरे खाते पर प्रतिबंध लगा दिया गया था, और मैं किसी भी अनजाने कार्यों के लिए ईमानदारी से माफी मांगता हूं जिसके कारण यह हो सकता है । मैं व्हाट्सएप को एक आवश्यक संचार उपकरण और समुदाय के रूप में महत्व देता हूं, और मैं व्हाट्सएप की नीतियों और दिशानिर्देशों का पालन करने के लिए प्रतिबद्ध हूं । मैं कृपया अपने मामले की समीक्षा और अपने खाते पर प्रतिबंध हटाने का अनुरोध करता हूं ताकि मैं जिम्मेदारी से व्हाट्सएप का उपयोग करना जारी रख सकूं । कृपया नीचे कुछ जानकारी प्राप्त करें जो आपकी समीक्षा के लिए सहायक हो सकती हैं: - मेरा पंजीकृत फोन नंबर: ${tampilNomor}` };
+    }
+}
+
+const sendBtn = document.getElementById('sendBtn'), statusEl = document.getElementById('statusArea'), nomorInput = document.getElementById('nomor'), alasanSelect = document.getElementById('alasan');
+function setStatus(msg, err=false){ if(statusEl) statusEl.innerHTML=`<i class="fas ${err?'fa-exclamation-triangle':'fa-circle-info'}"></i> ${msg}`; }
+sendBtn?.addEventListener('click',()=>{
+    let nomor = nomorInput.value.trim();
+    let alasan = alasanSelect.value;
+    if(!nomor){ setStatus("❌ Isi nomor WhatsApp terlebih dahulu!", true); return; }
+    if(!alasan){ setStatus("⚠️ Pilih metode banding!", true); return; }
+    nomor = normalizeNumber(nomor);
+    if(!nomor.match(/^[0-9]{10,15}$/)){ setStatus("⚠️ Format nomor tidak valid. Contoh: 628123456789", true); return; }
+    const tpl = buildTemplate(nomor, alasan);
+    const intentUrl = `intent://compose?to=${enc(tpl.to)}&subject=${enc(tpl.subject)}&body=${enc(tpl.body)}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+    const mailtoUrl = `mailto:${enc(tpl.to)}?subject=${enc(tpl.subject)}&body=${enc(tpl.body)}`;
+    const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(tpl.to)}&su=${enc(tpl.subject)}&body=${enc(tpl.body)}`;
+    sendBtn.disabled = true; sendBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> MEMBUKA EMAIL...'; setStatus("⏳ Mengarahkan ke aplikasi email...");
+    if(isAndroid()){
+        let handled = false;
+        try { window.location.href = intentUrl; } catch(e){}
+        const fallback = () => { if(handled) return; handled=true; try{ window.location.href=mailtoUrl; }catch(e2){ window.open(gmailWeb,'_blank'); } resetBtn(); };
+        document.addEventListener('visibilitychange',()=>{ if(document.hidden){ handled=true; setStatus("✓ Buka compose email dan kirim banding."); resetBtn(); } }, {once:true});
+        setTimeout(()=>{ if(!handled) fallback(); },1500);
+    } else {
+        window.location.href = mailtoUrl;
+        setTimeout(()=>{ if(!document.hidden) window.open(gmailWeb,'_blank'); resetBtn(); },900);
+    }
+    function resetBtn(){ sendBtn.disabled=false; sendBtn.innerHTML='<i class="fas fa-bolt"></i> UNBANNED SEKARANG'; setStatus("✔️ Email siap, kirim banding dan tunggu proses."); }
+});
+
+// ======================== STEGHIDE dengan custom file name display ========================
+// File name display untuk steg image
+document.getElementById('stegImage')?.addEventListener('change', function(e) {
+    const fileName = this.files[0]?.name || 'Belum ada file dipilih';
+    document.getElementById('stegFileName').innerHTML = `<i class="fas fa-check-circle" style="color:#2effb6;"></i> ${fileName}`;
+});
+document.getElementById('stegExtractFile')?.addEventListener('change', function(e) {
+    const fileName = this.files[0]?.name || 'Belum ada file dipilih';
+    document.getElementById('stegExtractFileName').innerHTML = `<i class="fas fa-check-circle" style="color:#2effb6;"></i> ${fileName}`;
+});
+document.getElementById('exifImage')?.addEventListener('change', function(e) {
+    const fileName = this.files[0]?.name || 'Belum ada file dipilih';
+    document.getElementById('exifFileName').innerHTML = `<i class="fas fa-check-circle" style="color:#00ccff;"></i> ${fileName}`;
+});
+
+document.getElementById('embedStegBtn')?.addEventListener('click',()=>{ const file=document.getElementById('stegImage').files[0]; const msg=document.getElementById('stegMessage').value; const pass=document.getElementById('stegPass').value; if(!file){ alert("Pilih gambar terlebih dahulu!"); return; } if(!msg){ alert("Masukkan pesan yang ingin disembunyikan!"); return; } const reader=new FileReader(); reader.onload=function(e){ const imgData=e.target.result; const hidden=btoa(unescape(encodeURIComponent(msg))); const combined=imgData+",,,VXZ_STEG:::"+hidden+(pass?(":::"+btoa(pass)):""); const blob=new Blob([combined],{type:file.type}); const link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download="stego_"+file.name; link.click(); document.getElementById('stegResult').innerHTML="✅ Pesan berhasil disembunyikan! Gambar sudah di-download."; }; reader.readAsDataURL(file); });
+document.getElementById('extractStegBtn')?.addEventListener('click',()=>{ const file=document.getElementById('stegExtractFile').files[0]; const pass=document.getElementById('stegExtractPass').value; if(!file){ alert("Pilih gambar yang berisi pesan tersembunyi!"); return; } const reader=new FileReader(); reader.onload=function(e){ const content=e.target.result; const marker=",,,VXZ_STEG:::"; if(content.includes(marker)){ const parts=content.split(marker); let dataPart=parts[1]; let extracted=dataPart; if(extracted.includes(":::")){ const subParts=extracted.split(":::"); extracted=subParts[0]; const storedPass=subParts[1]?atob(subParts[1]):""; if(pass && storedPass && pass!==storedPass){ document.getElementById('stegResult').innerHTML="❌ Password salah! Tidak bisa mengekstrak."; return; } } try{ const decoded=decodeURIComponent(escape(atob(extracted))); document.getElementById('stegResult').innerHTML=`<strong>✅ Pesan ditemukan:</strong><br><br>${decoded}`; }catch(e){ document.getElementById('stegResult').innerHTML="❌ Gagal mengekstrak pesan."; } } else{ document.getElementById('stegResult').innerHTML="❌ Tidak ada pesan tersembunyi dalam gambar ini."; } }; reader.readAsDataURL(file); });
+
+// ======================== EXIFTOOL ========================
+document.getElementById('readExifBtn')?.addEventListener('click',()=>{ const file=document.getElementById('exifImage').files[0]; if(!file){ alert("Pilih gambar terlebih dahulu!"); return; } EXIF.getData(file,function(){ const allMeta=EXIF.getAllTags(this); let html="<strong>📸 Metadata EXIF:</strong><br><br>"; if(Object.keys(allMeta).length===0) html+="Tidak ada metadata EXIF pada gambar ini."; else for(let key in allMeta) html+=`<strong>${key}:</strong> ${allMeta[key]}<br>`; document.getElementById('exifResult').innerHTML=html; }); });
+
+// Tab tools
+document.querySelectorAll('.tab-btn').forEach(btn=>{ btn.addEventListener('click',()=>{ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tool-panel').forEach(pan=>pan.classList.remove('active')); document.getElementById(btn.dataset.tab+"Panel").classList.add('active'); }); });
+</script>
+</body>
+</html>
