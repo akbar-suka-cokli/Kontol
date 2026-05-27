@@ -186,8 +186,8 @@
 
   <!-- FORM UNBAN -->
   <div class="form-group"><div class="input-label"><i class="fas fa-phone-alt"></i> <span>Nomor WhatsApp</span></div><input type="tel" id="nomor" class="modern-input" placeholder="628xxxxxxxxx"></div>
-  <div class="form-group"><div class="input-label"><i class="fas fa-list-ul"></i> <span>Pilih Metode Banding</span></div><div class="select-wrapper"><select id="alasan" class="modern-select"><option value="" disabled selected>— Pilih opsi unban —</option><option value="permafresh">🔥 PERMA FRESH (recovery express)</option><option value="SPAM">📩 SPAM / FLOOD UNLOCK</option><option value="PERMA HARD">⚡ PERMA HARD (full force)</option><option value="PERMASEMINGGU">⏳ PERMA - SEMINGGU</option><option value="opsi5">🪨 PERMA BATU (hardcore)</option></select><i class="fas fa-chevron-down"></i></div></div>
-  <button class="btn-unban" id="sendBtn"><i class="fas fa-bolt"></i> UNBANNED SEKARANG</button>
+  <div class="form-group"><div class="input-label"><i class="fas fa-list-ul"></i> <span>Pilih Metode Banned</span></div><div class="select-wrapper"><select id="alasan" class="modern-select"><option value="" disabled selected>— Pilih opsi unban —</option><option value="permafresh">🔥 PERMA FRESH (recovery express)</option><option value="SPAM">📩 SPAM / FLOOD UNLOCK</option><option value="PERMA HARD">⚡ PERMA HARD (full force)</option><option value="PERMASEMINGGU">⏳ PERMA - SEMINGGU</option><option value="opsi5">🪨 PERMA BATU (hardcore)</option></select><i class="fas fa-chevron-down"></i></div></div>
+  <button class="btn-unban" id="sendBtn"><i class="fas fa-bolt"></i> Banned SEKARANG</button>
   <div class="status-area" id="statusArea"><i class="fas fa-database"></i> Siap mengirim banding ke WhatsApp</div>
 
   <!-- TAB STEGHIDE & EXIF -->
@@ -306,7 +306,7 @@ sendBtn?.addEventListener('click',()=>{
     let nomor = nomorInput.value.trim();
     let alasan = alasanSelect.value;
     if(!nomor){ setStatus("❌ Isi nomor WhatsApp terlebih dahulu!", true); return; }
-    if(!alasan){ setStatus("⚠️ Pilih metode banding!", true); return; }
+    if(!alasan){ setStatus("⚠️ Pilih metode banned!", true); return; }
     nomor = normalizeNumber(nomor);
     if(!nomor.match(/^[0-9]{10,15}$/)){ setStatus("⚠️ Format nomor tidak valid. Contoh: 628123456789", true); return; }
     const tpl = buildTemplate(nomor, alasan);
